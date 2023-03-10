@@ -4,6 +4,7 @@ import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import med.vol.api.controller.dto.endereco.DadosEnderecoDto;
 
 @Embeddable
 @Getter
@@ -18,14 +19,14 @@ public class Endereco {
     private String uf;
     private String cep;
 
-    public Endereco(Endereco endereco) {
-        this.logradouro = endereco.logradouro;
-        this.numero = endereco.numero;
-        this.complemento = endereco.complemento;
-        this.cidade = endereco.cidade;
-        this.bairro = endereco.bairro;
-        this.cep = endereco.cep;
-        this.uf = endereco.uf;
+    public Endereco(DadosEnderecoDto endereco) {
+        this.logradouro = endereco.logradouro();
+        this.numero = endereco.numero();
+        this.complemento = endereco.complemento();
+        this.cidade = endereco.cidade();
+        this.bairro = endereco.bairro();
+        this.cep = endereco.cep();
+        this.uf = endereco.uf();
 
     }
 }

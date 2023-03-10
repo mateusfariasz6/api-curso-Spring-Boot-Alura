@@ -1,15 +1,13 @@
 package med.vol.api.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import med.vol.api.controller.dto.medico.MedicoCadastroDto;
 import med.vol.api.models.enums.Especialidade;
 @Table(name = "medicos")
 @Entity(name = "Medico")
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of ="id")
