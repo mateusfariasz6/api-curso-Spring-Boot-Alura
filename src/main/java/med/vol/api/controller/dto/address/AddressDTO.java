@@ -3,12 +3,11 @@ package med.vol.api.controller.dto.endereco;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-public record DadosEnderecoDto(
+public record AddressDto(
         @NotBlank
         String logradouro,
         @NotBlank
         String numero,
-
         String complemento,
         @NotBlank
         String bairro,
