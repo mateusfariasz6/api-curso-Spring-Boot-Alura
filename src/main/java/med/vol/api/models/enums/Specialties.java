@@ -1,6 +1,6 @@
 package med.vol.api.models.enums;
 
-public enum Especialidade {
+public enum Specialties {
     ORTOPEDIA,
     CARDIOLOGIA,
     GINECOLOGIA,

@@ -1,16 +1,16 @@
-package med.vol.api.controller.dto.medico;
+package med.vol.api.controller.dto.doctor;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import med.vol.api.controller.dto.endereco.AddressDto;
-import med.vol.api.models.enums.Especialidade;
+import med.vol.api.controller.dto.address.AddressDTO;
+import med.vol.api.models.enums.Specialties;
 
-public record MedicoCadastroDto(
+public record DoctorSaveRequestDTO(
         @NotBlank
-        String nome,
+        String name,
         @NotBlank
         @Email
         String email,
@@ -18,7 +18,7 @@ public record MedicoCadastroDto(
         @Pattern(regexp = "\\d{4,6}")
         String crm,
         @NotNull
-        Especialidade especialidade,
+        Specialties specialties,
         @NotNull @Valid
-        AddressDto endereco){
+        AddressDTO address){
 }

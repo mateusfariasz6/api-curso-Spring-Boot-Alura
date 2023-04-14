@@ -1,15 +1,10 @@
-package med.vol.api.controller.dto.medico;
+package med.vol.api.controller.dto.doctor;
 
 import jakarta.validation.constraints.NotNull;
-import med.vol.api.controller.dto.endereco.AddressDto;
-import med.vol.api.models.enums.Especialidade;
+import med.vol.api.controller.dto.address.AddressDTO;
+import med.vol.api.models.enums.Specialties;
 
-public record MedicoUpdateDto(
-        @NotNull
-        Long id,
-        String nome,
-        String email,
-        String crm,
-        Especialidade especialidade,
-        AddressDto dadosEnderecoDto) {
+public record DoctorUpdateRequestDTO(
+        String name,
+        AddressDTO address) {
 }

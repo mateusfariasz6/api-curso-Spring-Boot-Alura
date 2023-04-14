@@ -1,11 +1,11 @@
-package med.vol.api.controller.dto.medico;
+package med.vol.api.controller.dto.doctor;
 
-import med.vol.api.models.Medico;
-import med.vol.api.models.enums.Especialidade;
+import med.vol.api.models.Doctor;
+import med.vol.api.models.enums.Specialties;
 
-public record MedicoListagemDto(Long id,String nome, String email, String crm, Especialidade especialidade) {
+public record DoctorResponseDTO(Long id, String name, String email, String crm, Specialties specialties) {
 
-    public MedicoListagemDto(Medico medico){
-        this(medico.getId(), medico.getNome(), medico.getEmail(), medico.getCrm(), medico.getEspecialidade());
+    public DoctorResponseDTO(Doctor medico){
+        this(medico.getId(), medico.getName(), medico.getEmail(), medico.getCrm(), medico.getSpecialties());
     }
 }

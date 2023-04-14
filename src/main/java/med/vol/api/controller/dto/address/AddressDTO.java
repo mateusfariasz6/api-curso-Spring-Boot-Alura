@@ -1,19 +1,20 @@
-package med.vol.api.controller.dto.endereco;
+package med.vol.api.controller.dto.address;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
-public record AddressDto(
+public record AddressDTO(
         @NotBlank
-        String logradouro,
+        String street,
         @NotBlank
-        String numero,
-        String complemento,
+        String number,
+        String complement,
         @NotBlank
-        String bairro,
+        String neighborhood,
         @NotBlank
-        String cidade,
-        @NotBlank
+        String city,
+        @NotBlank @Size(min = 2)
         String uf,
         @NotBlank @Pattern(regexp = ("\\d{8}"))
         String cep) {

@@ -1,8 +1,9 @@
 package med.vol.api.repository;
 
-import med.vol.api.models.Medico;
+import med.vol.api.models.Doctor;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
-public interface MedicoRepository extends JpaRepository<Medico, Long> {
+public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
 }

@@ -2,38 +2,40 @@ package med.vol.api.models;
 
 import jakarta.persistence.*;
 import lombok.*;
-import med.vol.api.controller.dto.medico.MedicoCadastroDto;
-import med.vol.api.models.enums.Especialidade;
+import med.vol.api.controller.dto.doctor.DoctorSaveRequestDTO;
+import med.vol.api.models.enums.Specialties;
 
-@Table(name = "medicos")
-@Entity(name = "Medico")
+@Table(name = "doctor")
+@Entity(name = "Doctor")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Medico {
+public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "name")
-    private String nome;
+    private String name;
     @Column(name = "email")
     private String email;
     @Column(name = "crm")
     private String crm;
     @Enumerated(EnumType.STRING)
-    @Column(name = "")
-    private Especialidade especialidade;
+    @Column(name = "specialties")
+    private Specialties specialties;
     @Embedded
-    private Address endereco;
+    private Address address;
+
+    private Boolean status = true;
 
 
-    public Medico(MedicoCadastroDto medicoCadastroDto) {
-        this.nome = medicoCadastroDto.nome();
-        this.email = medicoCadastroDto.email();
-        this.crm = medicoCadastroDto.crm();
-        this.endereco = new Address(medicoCadastroDto.endereco());
-        this.especialidade = medicoCadastroDto.especialidade();
+    public Doctor(DoctorSaveRequestDTO doctorSaveRequestDto) {
+        this.name = doctorSaveRequestDto.name();
+        this.email = doctorSaveRequestDto.email();
+        this.crm = doctorSaveRequestDto.crm();
+        this.address = new Address(doctorSaveRequestDto.address());
+        this.specialties = doctorSaveRequestDto.specialties();
     }
 }
