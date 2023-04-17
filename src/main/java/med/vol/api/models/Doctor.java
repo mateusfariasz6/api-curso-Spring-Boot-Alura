@@ -18,9 +18,9 @@ public class Doctor {
     private Long id;
     @Column(name = "name")
     private String name;
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
-    @Column(name = "crm")
+    @Column(name = "crm", unique = true)
     private String crm;
     @Enumerated(EnumType.STRING)
     @Column(name = "specialties")
