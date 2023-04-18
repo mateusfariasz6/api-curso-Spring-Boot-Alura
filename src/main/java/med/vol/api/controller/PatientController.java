@@ -3,7 +3,8 @@ package med.vol.api.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import med.vol.api.controller.dto.patient.PatientResponseDTO;
-import med.vol.api.controller.dto.patient.PatientSaveDTO;
+import med.vol.api.controller.dto.patient.PatientSaveRequestDTO;
+import med.vol.api.controller.dto.patient.PatientUpdateRequestDTO;
 import med.vol.api.service.PatientService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -11,6 +12,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController()
@@ -30,9 +32,19 @@ public class PatientController {
     }
 
     @PostMapping()
-    public ResponseEntity<Void> save(@RequestBody @Valid PatientSaveDTO patientSaveDTO){
-        patientService.save(patientSaveDTO);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Void> save(@RequestBody @Valid PatientSaveRequestDTO patientSaveRequestDTO){
+        patientService.save(patientSaveRequestDTO);
+        URI uri = URI.create("/patient");
+        return ResponseEntity.created(uri).build();
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<PatientResponseDTO> update(@PathVariable Long id, @RequestBody @Valid PatientUpdateRequestDTO patientUpdateRequestDTO){
+        return ResponseEntity.ok(patientService.update(id, patientUpdateRequestDTO));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        patientService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

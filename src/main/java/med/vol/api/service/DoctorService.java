@@ -18,13 +18,16 @@ public class DoctorService {
 
     private final DoctorRepository doctorRepository;
 
-    public Page<DoctorResponseDTO> listAll(Pageable pageable){
-        return doctorRepository.findAll(pageable).map(DoctorResponseDTO::new);
+    public Page<DoctorResponseDTO> listAllByStatusIsTrue(Pageable pageable){
+        return doctorRepository.findAllByStatusIsTrue(pageable).map(DoctorResponseDTO::new);
     }
 
     public DoctorResponseDTO findById(Long id) {
-        Doctor medico = doctorRepository.findById(id).orElseThrow();
-        return new DoctorResponseDTO(medico);
+        Doctor doctor = doctorRepository.findById(id).orElseThrow();
+        if (doctor.getStatus() == Boolean.FALSE){
+            throw new RuntimeException("Medico não encontrado.");
+        }
+        return new DoctorResponseDTO(doctor);
 
     }
     @Transactional

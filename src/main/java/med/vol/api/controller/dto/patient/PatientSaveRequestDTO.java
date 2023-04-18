@@ -1,12 +1,10 @@
 package med.vol.api.controller.dto.patient;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
 import med.vol.api.controller.dto.address.AddressDTO;
 
-public record PatientSaveDTO(
+public record PatientSaveRequestDTO(
         @NotBlank @Size(min = 3, max = 300)
         String name,
         @NotBlank
@@ -16,5 +14,6 @@ public record PatientSaveDTO(
         String cpf,
         @NotBlank @Pattern(regexp = "\\d{11}")
         String telephone,
+        @NotNull @Valid
         AddressDTO address) {
 }

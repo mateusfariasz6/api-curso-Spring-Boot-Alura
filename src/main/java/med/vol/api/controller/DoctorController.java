@@ -31,7 +31,7 @@ public class DoctorController {
 
     @GetMapping
     public ResponseEntity<List<DoctorResponseDTO>> findAll(@PageableDefault(size = 10, sort = {"name"}, direction = Sort.Direction.ASC) Pageable pageable) {
-        return ResponseEntity.ok(doctorService.listAll(pageable).getContent());
+        return ResponseEntity.ok(doctorService.listAllByStatusIsTrue(pageable).getContent());
     }
 
     @GetMapping("/{id}")
@@ -45,7 +45,7 @@ public class DoctorController {
         return ResponseEntity.status(200).build();
     }
 
-    @PatchMapping("delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> changeStatusOfDoctor(@PathVariable Long id) {
         doctorService.changeStatus(id);
         return ResponseEntity.ok().build();
