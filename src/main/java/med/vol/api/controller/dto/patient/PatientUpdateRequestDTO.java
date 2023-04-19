@@ -8,10 +8,7 @@ import jakarta.validation.constraints.Size;
 import med.vol.api.controller.dto.address.AddressDTO;
 
 public record PatientUpdateRequestDTO(
-        @NotBlank @Size(min = 3, max = 300)
         String name,
-        @NotBlank @Pattern(regexp = "\\d{11}")
         String telephone,
-        @NotNull @Valid
         AddressDTO address) {
 }

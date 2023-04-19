@@ -27,23 +27,23 @@ public class PatientController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<PatientResponseDTO> findById(@PathVariable Long id){
+    public ResponseEntity<PatientResponseDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(patientService.findById(id));
     }
 
     @PostMapping()
-    public ResponseEntity<Void> save(@RequestBody @Valid PatientSaveRequestDTO patientSaveRequestDTO){
-        patientService.save(patientSaveRequestDTO);
+    public ResponseEntity<PatientResponseDTO> save(@RequestBody @Valid PatientSaveRequestDTO patientSaveRequestDTO) {
         URI uri = URI.create("/patient");
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity.created(uri).body(patientService.save(patientSaveRequestDTO));
     }
+
     @PutMapping("/{id}")
-    public ResponseEntity<PatientResponseDTO> update(@PathVariable Long id, @RequestBody @Valid PatientUpdateRequestDTO patientUpdateRequestDTO){
+    public ResponseEntity<PatientResponseDTO> update(@PathVariable Long id, @RequestBody @Valid PatientUpdateRequestDTO patientUpdateRequestDTO) {
         return ResponseEntity.ok(patientService.update(id, patientUpdateRequestDTO));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         patientService.delete(id);
         return ResponseEntity.noContent().build();
     }

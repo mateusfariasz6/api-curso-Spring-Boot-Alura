@@ -8,8 +8,6 @@ import med.vol.api.controller.dto.address.AddressDTO;
 import med.vol.api.models.enums.Specialties;
 
 public record DoctorUpdateRequestDTO(
-        @NotBlank @Size(min = 3, max = 300)
         String name,
-        @NotNull @Valid
         AddressDTO address) {
 }

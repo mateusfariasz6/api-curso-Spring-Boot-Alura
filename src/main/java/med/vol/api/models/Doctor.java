@@ -3,7 +3,10 @@ package med.vol.api.models;
 import jakarta.persistence.*;
 import lombok.*;
 import med.vol.api.controller.dto.doctor.DoctorSaveRequestDTO;
+import med.vol.api.controller.dto.doctor.DoctorUpdateRequestDTO;
 import med.vol.api.models.enums.Specialties;
+
+import java.util.InputMismatchException;
 
 @Table(name = "doctor")
 @Entity(name = "Doctor")
@@ -27,8 +30,7 @@ public class Doctor {
     private Specialties specialties;
     @Embedded
     private Address address;
-
-    private Boolean status = true;
+    private Boolean status;
 
 
     public Doctor(DoctorSaveRequestDTO doctorSaveRequestDto) {
@@ -37,5 +39,21 @@ public class Doctor {
         this.crm = doctorSaveRequestDto.crm();
         this.address = new Address(doctorSaveRequestDto.address());
         this.specialties = doctorSaveRequestDto.specialties();
+        this.status = true;
+    }
+
+    public void updateData(DoctorUpdateRequestDTO doctorUpdateRequestDTO) {
+        if (doctorUpdateRequestDTO.name() != null) {
+            if (doctorUpdateRequestDTO.name().matches("^[a-zA-Z ]{1,60}$")) {
+                this.name = doctorUpdateRequestDTO.name();
+            } else {
+
+                throw new InputMismatchException("O campo não atende os requisitos");
+
+            }
+        }
+        if (doctorUpdateRequestDTO.address() != null) {
+            this.address.updateData(doctorUpdateRequestDTO.address());
+        }
     }
 }

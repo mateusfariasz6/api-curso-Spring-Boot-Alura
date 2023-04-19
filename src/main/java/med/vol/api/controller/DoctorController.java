@@ -6,17 +6,18 @@ import med.vol.api.controller.dto.doctor.DoctorResponseDTO;
 import med.vol.api.controller.dto.doctor.DoctorSaveRequestDTO;
 import med.vol.api.controller.dto.doctor.DoctorUpdateRequestDTO;
 import med.vol.api.service.DoctorService;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "medicos")
+@RequestMapping(value = "medico")
 @RequiredArgsConstructor
 public class DoctorController {
 
@@ -24,9 +25,10 @@ public class DoctorController {
     private final DoctorService doctorService;
 
     @PostMapping()
-    public ResponseEntity<Void> save(@RequestBody @Valid DoctorSaveRequestDTO doctorSaveRequestDto) {
-        doctorService.save(doctorSaveRequestDto);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<DoctorResponseDTO> save(@RequestBody @Valid DoctorSaveRequestDTO doctorSaveRequestDto, UriComponentsBuilder uriComponentsBuilder) {
+        DoctorResponseDTO doctor = doctorService.save(doctorSaveRequestDto);
+        URI uri = uriComponentsBuilder.path("medico/{id}").buildAndExpand(doctor.id()).toUri();
+        return ResponseEntity.created(uri).body(doctor);
     }
 
     @GetMapping
@@ -39,16 +41,15 @@ public class DoctorController {
         return ResponseEntity.ok(doctorService.findById(id));
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid DoctorUpdateRequestDTO doctorUpdateRequestDTO) {
-        doctorService.update(id, doctorUpdateRequestDTO);
-        return ResponseEntity.status(200).build();
+    @PutMapping("/{id}")
+    public ResponseEntity<DoctorResponseDTO> update(@PathVariable Long id, @RequestBody DoctorUpdateRequestDTO doctorUpdateRequestDTO) {
+        return ResponseEntity.ok(doctorService.update(id, doctorUpdateRequestDTO));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> changeStatusOfDoctor(@PathVariable Long id) {
         doctorService.changeStatus(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
 
