@@ -24,7 +24,7 @@ public class DoctorService {
     }
 
     public DoctorResponseDTO findById(Long id) {
-        Doctor doctor = doctorRepository.findById(id).orElseThrow(BadRequestException::new);
+        Doctor doctor = doctorRepository.findById(id).orElseThrow(ResourceNotFundException::new);
         if (!doctor.getStatus()) {
             throw new ResourceNotFundException();
         }
@@ -41,7 +41,7 @@ public class DoctorService {
 
     @Transactional
     public DoctorResponseDTO update(Long id, DoctorUpdateRequestDTO doctorUpdateRequestDTO) {
-        Doctor doctor = doctorRepository.findById(id).orElseThrow();
+        Doctor doctor = doctorRepository.findById(id).orElseThrow(ResourceNotFundException::new);
         doctor.updateData(doctorUpdateRequestDTO);
         doctorRepository.save(doctor);
         return new DoctorResponseDTO(doctor);
@@ -49,7 +49,7 @@ public class DoctorService {
 
     @Transactional
     public void changeStatus(Long id) {
-        Doctor doctor = doctorRepository.findById(id).orElseThrow();
+        Doctor doctor = doctorRepository.findById(id).orElseThrow(ResourceNotFundException::new);
         doctor.setStatus(false);
         doctorRepository.save(doctor);
     }

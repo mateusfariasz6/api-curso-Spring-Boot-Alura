@@ -2,14 +2,16 @@ package med.vol.api.exceptions;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
-@Data
-@Builder
+@Getter
+@SuperBuilder
 public class ExceptionsDetails {
-    private String title;
-    private int status;
-    private String details;
-    private LocalDateTime timestamp;
+    protected String title;
+    protected int status;
+    protected String details;
+    protected LocalDateTime timestamp;
 }
