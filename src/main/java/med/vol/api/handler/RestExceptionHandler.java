@@ -1,5 +1,6 @@
 package med.vol.api.handler;
 
+import med.vol.api.exceptions.BadRequestException;
 import med.vol.api.exceptions.ExceptionsDetails;
 import med.vol.api.exceptions.ResourceNotFundException;
 import med.vol.api.exceptions.ValidationExceptionDetails;
@@ -45,6 +46,21 @@ public class RestExceptionHandler {
                 .fieldsMessage(fieldsMessage)
                 .build(), HttpStatus.BAD_REQUEST
         );
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ExceptionsDetails> handleBadRequestException(BadRequestException ex){
+
+        return new ResponseEntity<>(
+                ExceptionsDetails.builder()
+                        .title("Bad request exception, Check The Documentation.")
+                        .status(HttpStatus.BAD_REQUEST.value())
+                        .timestamp(LocalDateTime.now())
+                        .details(ex.getMessage())
+                        .build(), HttpStatus.BAD_REQUEST
+        );
+
     }
 
 

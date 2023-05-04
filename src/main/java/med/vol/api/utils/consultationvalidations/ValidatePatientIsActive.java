@@ -5,19 +5,20 @@ import med.vol.api.controller.dto.consultation.ConsultationSaveRequestDTO;
 import med.vol.api.exceptions.BadRequestException;
 import med.vol.api.models.Patient;
 import med.vol.api.repository.PatientRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @RequiredArgsConstructor
+@Component
 public class ValidatePatientIsActive implements ConsultationValidations{
     private final PatientRepository patientRepository;
     @Override
     public void validate(ConsultationSaveRequestDTO consultationSaveRequestDTO) {
-        Optional<Patient> patient = patientRepository.findById(consultationSaveRequestDTO.patientId());
-        if (patient.isPresent()){
-            if (!patient.get().getStatus()){
-                throw new BadRequestException("Patient not is active!");
-            }
+
+        boolean patientActive = patientRepository.existsByIdAndStatusIsTrue(consultationSaveRequestDTO.patientId());
+        if (!patientActive){
+            throw new BadRequestException("Patient does not exist or is not active!");
         }
     }
 }

@@ -8,12 +8,14 @@ import med.vol.api.service.ConsultationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
-@RestController("/consultation")
+@RestController()
+@RequestMapping("consultation")
 @RequiredArgsConstructor
 public class ConsultationController {
 
@@ -21,7 +23,7 @@ public class ConsultationController {
     @PostMapping
     public ResponseEntity<ConsultationResponseDTO> toSchedule(@RequestBody @Valid ConsultationSaveRequestDTO consultationSaveRequestDTO, UriComponentsBuilder uriComponentsBuilder){
         ConsultationResponseDTO consultation = consultationService.toSchedule(consultationSaveRequestDTO);
-        URI uri = uriComponentsBuilder.path("consultation/{id}").buildAndExpand(consultation.id()).toUri();
+        URI uri = uriComponentsBuilder.path("/consultation").buildAndExpand(consultation.id()).toUri();
         return ResponseEntity.created(uri).body(consultation);
 
     }

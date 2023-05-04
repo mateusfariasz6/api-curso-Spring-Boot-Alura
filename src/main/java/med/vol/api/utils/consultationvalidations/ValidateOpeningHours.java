@@ -2,10 +2,11 @@ package med.vol.api.utils.consultationvalidations;
 
 import med.vol.api.controller.dto.consultation.ConsultationSaveRequestDTO;
 import med.vol.api.exceptions.BadRequestException;
+import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
-
+@Component
 public class ValidateOpeningHours implements ConsultationValidations {
     @Override
     public void validate(ConsultationSaveRequestDTO consultationSaveRequestDTO) {

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import med.vol.api.controller.dto.consultation.ConsultationSaveRequestDTO;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -29,4 +30,10 @@ public class Consultation {
     private Patient patient;
 
     private LocalDateTime date;
+
+    public Consultation(Doctor doctor, Patient patient, LocalDateTime date) {
+        this.doctor = doctor;
+        this.patient = patient;
+        this.date = date;
+    }
 }

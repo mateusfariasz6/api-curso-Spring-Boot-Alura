@@ -13,15 +13,15 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
     Page<Doctor> findAllByStatusIsTrue(Pageable pageable);
 
     @Query(value = """
-            select d from Doctor
+            select d from Doctor d
             where
             d.status = 1
             and
-            d.specialties = :specialities
+            d.specialties = :specialties
             and
             d.id not in(
             
-                select c.doctor_id from Consultations c
+                select c.doctor from Consultation c
                 where
                 c.date = :date
             
@@ -33,4 +33,5 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
             """)
     Doctor chooseRandomDoctor(Specialties specialties, LocalDateTime date);
 
+    boolean existsByIdAndStatusIsTrue(Long id);
 }
