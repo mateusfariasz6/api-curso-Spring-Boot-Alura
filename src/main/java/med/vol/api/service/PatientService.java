@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import med.vol.api.controller.dto.patient.PatientResponseDTO;
 import med.vol.api.controller.dto.patient.PatientSaveRequestDTO;
 import med.vol.api.controller.dto.patient.PatientUpdateRequestDTO;
+import med.vol.api.exceptions.ResourceNotFundException;
 import med.vol.api.models.Patient;
 import med.vol.api.repository.PatientRepository;
 import org.springframework.data.domain.Pageable;
@@ -23,9 +24,9 @@ public class PatientService {
     }
 
     public PatientResponseDTO findById(Long id) {
-        Patient patient = patientRepository.findById(id).orElseThrow();
+        Patient patient = patientRepository.findById(id).orElseThrow(() -> new ResourceNotFundException("Patient not found!"));
         if (!patient.getStatus()) {
-            throw new NoSuchElementException("Paciente não encontrado.");
+            throw new ResourceNotFundException("Patient is inactive!");
         }
         return new PatientResponseDTO(patient);
     }
@@ -40,9 +41,9 @@ public class PatientService {
     @Transactional
     public PatientResponseDTO update(Long id, PatientUpdateRequestDTO patientUpdateRequestDTO) {
 
-        Patient patient = patientRepository.findById(id).orElseThrow();
+        Patient patient = patientRepository.findById(id).orElseThrow(() -> new ResourceNotFundException("Patient not found!"));
         if (!patient.getStatus()) {
-            throw new NoSuchElementException("Paciente não encontrado");
+            throw new ResourceNotFundException("Patient is inactive!");
         }
         patient.updateData(patientUpdateRequestDTO);
         return new PatientResponseDTO(patientRepository.save(patient));
@@ -50,9 +51,9 @@ public class PatientService {
 
     @Transactional
     public void delete(Long id) {
-        Patient patient = patientRepository.findById(id).orElseThrow();
+        Patient patient = patientRepository.findById(id).orElseThrow(() -> new ResourceNotFundException("Patient not found!"));
         if (!patient.getStatus()) {
-            throw new NoSuchElementException("Paciente não encontrado!");
+            throw new ResourceNotFundException("Patient is inactive!");
         }
         patient.setStatus(false);
         patientRepository.save(patient);
